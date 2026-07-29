@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connexion — Système d'Alerte Précoce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="login-screen">
+  <div class="login-card">
+    <div class="login-eyebrow">Accès protégé</div>
+    <h1 id="loginTitle">Système d'Alerte Précoce</h1>
+    <p class="sub" id="loginSub">Saisissez le mot de passe pour accéder au tableau de bord</p>
+    <form id="loginForm" autocomplete="off">
+      <input type="password" id="pwdInput" placeholder="••••••••" autofocus>
+      <button type="submit">Se connecter</button>
+    </form>
+    <div class="login-error" id="loginError"></div>
+    <p class="login-footnote">Accès de démonstration académique. Ce mot de passe protège l'accès direct au lien, mais ne constitue pas une sécurité de niveau serveur — n'y placez aucune donnée réellement confidentielle.</p>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script>
+  document.getElementById("loginTitle").textContent = CONFIG.projet.titre;
+  document.getElementById("loginSub").textContent = "Saisissez le mot de passe pour accéder à " + CONFIG.projet.sigleOutil;
+
+  document.getElementById("loginForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    const val = document.getElementById("pwdInput").value;
+    if(val === CONFIG.auth.motDePasse){
+      sessionStorage.setItem("sap_authentifie", "1");
+      window.location.href = "dashboard.html";
+    } else {
+      document.getElementById("loginError").textContent = "Mot de passe incorrect. Réessayez.";
+      document.getElementById("pwdInput").value = "";
+      document.getElementById("pwdInput").focus();
+    }
+  });
+</script>
+</body>
+</html>
